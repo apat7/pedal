@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Directions Panel Demo</title>
+    <link rel="stylesheet" href="./src/ui/DirectionsPanel.css" />
+  </head>
+  <body>
+    <div id="directions" class="directions-root"></div>
+
+    <script type="module">
+      import { loadDirections } from "./src/nav/init.js";
+
+      window.addEventListener("DOMContentLoaded", () => {
+        loadDirections().catch((error) => {
+          console.error("Failed to load directions", error);
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+.learn-more-container {
+  padding: 80px 20px; /* Adjusted padding to match other sections */
+  max-width: 1000px; /* Adjusted max-width for a wider layout */
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif; /* Use the global font */
+  color: var(--text-dark); /* Use global text color */
+  background: var(--light-beige); /* Consistent background */
+  min-height: calc(100vh - 80px); /* Ensure it takes up full height, accounting for nav */
+}
+
+.learn-more-container h1 {
+  font-size: 42px; /* Match h2 on other pages */
+  font-weight: 700;
+  color: var(--dark-green); /* Use global dark green for headings */
+  margin-bottom: 40px; /* Increased margin */
+  text-align: center;
+}
+
+.learn-more-container h2 {
+  font-size: 32px; /* Slightly smaller than h1, consistent with subheadings */
+  font-weight: 600;
+  color: var(--dark-green); /* Use global dark green for subheadings */
+  margin-top: 50px; /* Increased top margin */
+  margin-bottom: 20px; /* Increased bottom margin */
+}
+
+.learn-more-container p {
+  line-height: 1.8; /* Slightly increased line height for readability */
+  margin-bottom: 20px; /* Increased margin */
+  font-size: 18px; /* Slightly larger font size */
+  color: var(--text-light); /* Use global light text color for paragraphs */
+}
+
+.learn-more-container ul {
+  list-style-type: disc;
+  margin-left: 40px; /* Increased indent for list */
+  margin-bottom: 20px; /* Increased margin */
+  color: var(--text-light);
+}
+
+.learn-more-container li {
+  margin-bottom: 10px; /* Increased margin between list items */
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+.learn-more-container strong {
+  color: var(--dark-green); /* Highlight strong text with dark green */
+}

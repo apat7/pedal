@@ -1,0 +1,1233 @@
+/* General Dashboard Layout */
+.dashboard-container {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  overflow: visible; /* Allow map interactions */
+  background-color: transparent; /* Make transparent to show background map */
+  color: var(--text-dark);
+}
+
+/* Dashboard Layout Container */
+.dashboard-layout-container {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  overflow: visible;
+  pointer-events: auto;
+}
+
+/* Sidebar Styles */
+.left-sidebar,
+.right-sidebar {
+  padding: 20px;
+  overflow-y: auto;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  pointer-events: auto; /* Ensure sidebars can be interacted with */
+}
+
+/* Mobile menu buttons - hidden by default, shown on mobile */
+.mobile-menu-btn {
+  display: none;
+}
+
+.right-toggle {
+  display: flex; /* Always display the right toggle button */
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: var(--dark-green);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 1002;
+  transition: all 0.2s ease;
+  pointer-events: auto; /* Ensure button can be clicked */
+}
+
+.right-toggle:hover {
+  background-color: var(--forest-green);
+  transform: scale(1.05);
+}
+
+.right-toggle #toggleIcon {
+  color: #fff;
+}
+
+.left-sidebar {
+  left: 0;
+  width: 350px;
+  min-width: 300px;
+  transform: translateX(0);
+}
+
+.left-sidebar.closed {
+  transform: translateX(-100%);
+}
+
+.right-sidebar {
+  right: 0;
+  width: 350px;
+  min-width: 300px;
+  transform: translateX(100%);
+}
+
+.right-sidebar.open {
+  transform: translateX(0);
+}
+
+/* Map Container */
+.map-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: transparent; /* Remove background to avoid interference */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--light-beige);
+    font-size: 18px;
+    z-index: 1;
+    pointer-events: auto; /* Ensure map can receive interactions */
+}
+
+/* Desktop layout adjustments */
+@media (min-width: 769px) {
+  .left-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    transform: translateX(0);
+    z-index: 100;
+  }
+  
+  .left-sidebar.closed {
+    transform: translateX(-100%);
+  }
+  
+  .right-sidebar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    z-index: 100;
+  }
+  
+  .map-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    pointer-events: auto; /* Ensure map can receive interactions */
+  }
+  
+  .mobile-menu-btn {
+    display: none;
+  }
+  /* Ensure right-toggle is visible on desktop and positioned correctly */
+  .right-toggle {
+    display: flex;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1002;
+  }
+
+  
+}
+
+.map-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 400px;
+  color: var(--text-light);
+  text-align: center;
+  background-color: var(--light-beige);
+}
+
+.map-placeholder svg {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 15px;
+  color: var(--primary-color);
+}
+
+.map-placeholder h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.map-placeholder p {
+  font-size: 1rem;
+  max-width: 400px;
+}
+
+/* Interactive Map Styling */
+.map-container > div {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 400px;
+  pointer-events: auto !important; /* Ensure map div can receive interactions */
+  touch-action: manipulation; /* Optimize touch interactions */
+}
+
+/* Route Maker Panel */
+.route-maker {
+  background-color: var(--beige);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+  border: 1px solid rgba(27, 58, 47, 0.1);
+  max-height: calc(100vh - 300px); /* Reduced to make scrollbar appear sooner */
+  overflow-y: auto;
+}
+
+.crime-panel {
+  background-color: var(--beige);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+  border: 1px solid rgba(27, 58, 47, 0.1);
+}
+
+.view-routes-btn {
+  background-color: var(--sage-green);
+  color: var(--beige);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.view-routes-btn:hover {
+  background-color: var(--mint-green);
+  transform: translateY(-1px);
+}
+
+.route-maker h2,
+.crime-panel h3 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--dark-green);
+  margin-bottom: 24px;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Route Input Group */
+.route-input-group {
+  margin-bottom: 15px;
+  position: relative; /* For suggestions list positioning */
+}
+
+/* Route Input Group with Remove Button */
+.route-input-group:has(.remove-stop-btn) {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* Input and button container for stop inputs */
+.route-input-group:has(.remove-stop-btn) .input-container {
+  display: flex;
+  align-items: center;
+}
+
+/* General input container styling */
+.input-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Current location button styling */
+.current-location-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--primary-green);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.current-location-btn:hover {
+  background: var(--dark-green);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.current-location-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.route-input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--text-dark);
+  font-size: 0.9rem;
+}
+
+/* Stop label container with numbered circle */
+.stop-label-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stop-number-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--primary-green);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.route-input {
+  width: 100%;
+  padding: 12px 40px 12px 16px; /* Added right padding for location button */
+  border: 1px solid rgba(27, 58, 47, 0.2);
+  border-radius: 8px;
+  background-color: var(--light-beige);
+  color: var(--text-dark);
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+/* Route Input with Remove Button */
+.route-input-group:has(.remove-stop-btn) .route-input {
+  flex: 1;
+  border-radius: 8px 0 0 8px;
+  height: 44px;
+}
+
+.route-input:focus {
+  outline: none;
+  border-color: var(--dark-green);
+  box-shadow: 0 0 0 3px rgba(27, 58, 47, 0.1);
+}
+
+/* Route Options */
+.route-options {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.map-toggle {
+    display: flex;
+    gap: 6px;
+    margin: 15px 0;
+}
+
+.toggle-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 6px;
+    background: var(--light-beige);
+    border: 2px solid var(--darker-beige);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 11px;
+    color: var(--text-light);
+}
+
+.toggle-btn:hover {
+    background: var(--beige);
+    border-color: var(--sage-green);
+}
+
+.toggle-btn.active {
+    background: var(--sage-green);
+    border-color: var(--forest-green);
+    color: white;
+}
+
+.toggle-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.route-option {
+  flex: 1;
+  min-width: 100px;
+  padding: 12px 8px;
+  border: 1px solid rgba(27, 58, 47, 0.2);
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-light);
+  background-color: var(--light-beige);
+}
+
+.route-option:hover {
+  background-color: rgba(27, 58, 47, 0.05);
+  border-color: var(--dark-green);
+  transform: translateY(-1px);
+}
+
+.route-option.active {
+  background-color: var(--dark-green);
+  color: white;
+  border-color: var(--dark-green);
+  box-shadow: 0 4px 12px rgba(27, 58, 47, 0.2);
+}
+
+.route-option.active svg {
+  color: white;
+}
+
+.route-option svg {
+  width: 20px;
+  height: 20px;
+  color: var(--dark-green);
+  transition: color 0.2s ease;
+}
+
+/* Buttons */
+.route-btn,
+.add-stop-btn,
+.remove-stop-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.route-btn {
+  background-color: var(--dark-green);
+  color: white;
+  width: 100%;
+  margin-top: 16px;
+  padding: 14px 20px;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.route-btn:hover {
+  background-color: var(--forest-green);
+  box-shadow: 0 4px 12px rgba(27, 58, 47, 0.3);
+  transform: translateY(-1px);
+}
+
+.add-stop-btn {
+  background-color: var(--sage-green);
+  color: white;
+  width: auto;
+  margin-top: 12px;
+  margin-bottom: 16px;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+}
+
+.add-stop-btn:hover {
+  background-color: var(--mint-green);
+  transform: translateY(-1px);
+}
+
+.remove-stop-btn {
+  background-color: #dc3545;
+  color: white;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  font-size: 0.8rem;
+  border: 1px solid rgba(27, 58, 47, 0.2);
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.remove-stop-btn:hover {
+  background-color: #c82333;
+}
+
+/* Crime Panel Tabs */
+.tab-buttons {
+  display: flex;
+  margin-bottom: 24px;
+  background-color: rgba(27, 58, 47, 0.02);
+  border-radius: 8px 8px 0 0;
+  padding: 4px;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 12px 16px;
+  background-color: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--text-light);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.tab-btn:hover {
+  color: var(--dark-green);
+  background-color: rgba(27, 58, 47, 0.05);
+}
+
+.tab-btn.active {
+  color: var(--dark-green);
+  background-color: var(--light-beige);
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tab-content {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.tab-content.active {
+  display: block;
+  opacity: 1;
+}
+
+/* Crime Form */
+.crime-form .form-group {
+  margin-bottom: 15px;
+}
+
+.crime-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--text-dark);
+  font-size: 0.9rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid rgba(27, 58, 47, 0.2);
+  border-radius: 8px;
+  background-color: var(--light-beige);
+  color: var(--text-dark);
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--dark-green);
+  box-shadow: 0 0 0 3px rgba(27, 58, 47, 0.1);
+}
+
+textarea.form-input {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* Crime Reports List */
+.crime-report {
+  background-color: var(--beige);
+  border: 1px solid rgba(27, 58, 47, 0.1);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.crime-report:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.report-type {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: white;
+}
+
+.report-type.low { background-color: var(--sage-green); }
+.report-type.medium { background-color: #ffc107; color: #000; }
+.report-type.high { background-color: #dc3545; }
+
+.report-time {
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+.vote-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.vote-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid rgba(27, 58, 47, 0.2);
+  border-radius: 6px;
+  background-color: var(--light-beige);
+  color: var(--text-dark);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.vote-btn:hover {
+  background-color: rgba(27, 58, 47, 0.05);
+  border-color: var(--dark-green);
+  transform: translateY(-1px);
+}
+
+.vote-btn.user-voted {
+  background-color: var(--dark-green);
+  color: white;
+  border-color: var(--dark-green);
+}
+
+.vote-btn.user-voted svg {
+  color: white;
+}
+
+.vote-btn.leading {
+  font-weight: bold;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .left-sidebar {
+    width: 100%;
+    max-width: 320px;
+    transform: translateX(-100%);
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+    z-index: 200;
+  }
+
+  .left-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .right-sidebar {
+    width: 100%;
+    max-width: 320px;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+    z-index: 200;
+  }
+  
+  .map-container {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    pointer-events: auto; /* Ensure map can receive interactions */
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: var(--dark-green);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: max-content;
+    height: max-content;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 1002;
+    box-shadow: 0 4px 12px rgba(27, 58, 47, 0.3);
+    transition: all 0.2s ease;
+    pointer-events: auto; /* Ensure button can be clicked */
+  }
+
+  .mobile-menu-btn:hover {
+    background-color: var(--forest-green);
+    transform: scale(1.05);
+  }
+
+  .right-toggle {
+    display: flex;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--dark-green);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 1002;
+    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+    transition: all 0.2s ease;
+  }
+
+  .right-toggle:hover {
+    background-color: var(--forest-green);
+    transform: scale(1.05);
+  }
+
+  .right-toggle #toggleIcon {
+    color: white;
+  }
+}
+
+/* Autocomplete Suggestions */
+.suggestions-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--light-beige);
+  border: 1px solid rgba(27, 58, 47, 0.2);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.suggestions-list li {
+  padding: 12px 16px;
+  cursor: pointer;
+  color: var(--text-dark);
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid rgba(27, 58, 47, 0.05);
+}
+
+.suggestions-list li:last-child {
+  border-bottom: none;
+}
+
+.suggestions-list li:hover {
+  background-color: rgba(27, 58, 47, 0.05);
+}
+
+/* Saved Routes Section */
+.saved-routes-section {
+  background-color: var(--beige);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(27, 58, 47, 0.1);
+}
+
+.saved-routes-section label {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 600;
+  color: var(--dark-green);
+  font-size: 1rem;
+}
+
+.saved-routes-section > div {
+  font-size: 14px;
+  color: var(--text-light);
+  padding: 12px 0;
+  line-height: 1.5;
+}
+
+.saved-routes-section > div > div {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(27, 58, 47, 0.1);
+  transition: background-color 0.2s ease;
+  border-radius: 4px;
+  padding-left: 8px;
+  margin-left: -8px;
+}
+
+.saved-routes-section > div > div:hover {
+  background-color: rgba(27, 58, 47, 0.02);
+}
+
+.saved-routes-section > div > div:last-child {
+  border-bottom: none;
+}
+
+.saved-routes-section > div:last-child {
+  margin-top: 16px;
+  font-weight: bold;
+  color: var(--dark-green);
+  padding: 12px;
+  background-color: rgba(27, 58, 47, 0.05);
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* Bottom Navigation Bar */
+.bottom-nav-bar {
+  background-color: var(--beige);
+  display: flex;
+  width: max-content;
+  height: max-content;
+  align-items: center;
+  padding: 12px;
+  border-radius: 20px;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  left: 50%;
+  transform: translateX(-50%);
+  position: fixed !important;
+  bottom: 16px !important;
+  top: auto !important;
+  z-index: 1000;
+  pointer-events: auto; /* Ensure navigation can be interacted with */
+}
+
+/* Popup Overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  backdrop-filter: blur(5px);
+  pointer-events: auto; /* Ensure overlay captures all pointer events */
+  cursor: default;
+}
+
+/* Popup Content */
+.popup-content {
+  background-color: var(--light-beige);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  animation: fadeInScale 0.3s ease-out forwards;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.popup-content h2 {
+  color: var(--dark-green);
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.popup-content p {
+  text-align: center;
+  color: var(--text-light);
+  font-size: 1rem;
+  margin-top: 15px;
+}
+
+.popup-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-light);
+  transition: color 0.2s ease;
+}
+
+.popup-close-btn:hover {
+  color: var(--dark-green);
+}
+
+.routes-list {
+  margin-top: 20px;
+  border-top: 1px solid rgba(27, 58, 47, 0.1);
+  padding-top: 15px;
+}
+
+.route-item {
+  background-color: var(--light-beige);
+  border: 1px solid rgba(27, 58, 47, 0.1);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.route-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.route-item strong {
+  color: var(--dark-green);
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.route-item p {
+  text-align: left;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+/* Route item layout for delete functionality */
+
+.route-info {
+  flex: 1;
+}
+
+.route-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.delete-route-btn {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-route-btn:hover {
+  background-color: #dc2626;
+  transform: scale(1.05);
+}
+
+.load-route-btn {
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.load-route-btn:hover {
+  background-color: #16a34a;
+  transform: scale(1.05);
+}
+
+
+.bottom-nav-bar .nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text-light);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  min-width: 60px;
+}
+
+.bottom-nav-bar .nav-item:hover {
+  background-color: rgba(27, 58, 47, 0.05);
+  color: var(--dark-green);
+  transform: translateY(-1px);
+}
+
+.bottom-nav-bar .nav-item svg {
+  width: 20px;
+  height: 20px;
+  transition: color 0.2s ease;
+}
+
+.bottom-nav-bar .nav-item:hover svg {
+  color: var(--dark-green);
+}
+
+/* Empty state styling */
+.tab-content > div:first-child {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-light);
+  font-style: italic;
+  background-color: rgba(27, 58, 47, 0.02);
+  border-radius: 8px;
+  border: 2px dashed rgba(27, 58, 47, 0.1);
+}
+
+/* Route Details Container */
+.route-details-container {
+  margin-top: 20px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: white;
+  position: relative;
+  z-index: 20;
+}
+
+/* Turn-by-turn directions styling */
+.turn-by-turn-directions {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(27, 58, 47, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(27, 58, 47, 0.1);
+}
+
+.turn-by-turn-directions h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 15px 0;
+  color: var(--dark-green);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.directions-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.direction-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(27, 58, 47, 0.1);
+}
+
+.direction-step:last-child {
+  border-bottom: none;
+}
+
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  background: var(--primary-green);
+  color: white;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-instruction {
+  color: var(--text-dark);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.step-details {
+  display: flex;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+.step-distance {
+  font-weight: 500;
+}
+
+.step-duration {
+  color: var(--text-light);
+}
+
+.route-map-container > div:first-child {
+  height: 300px;
+  border-radius: 12px 12px 0 0;
+}
+
+.route-details {
+  padding: 16px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-radius: 0 0 12px 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.route-actions {
+  display: flex;
+  gap: 10px;
+  padding: 16px;
+  background: white;
+  border-radius: 12px;
+}
+
+.clear-route-btn {
+  flex: 1;
+  padding: 12px 20px;
+  border: 1px solid #ef4444;
+  border-radius: 8px;
+  background: white;
+  color: #ef4444;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.clear-route-btn:hover {
+  background: #ef4444;
+  color: white;
+}
+
+.route-details p {
+  margin: 8px 0;
+  font-size: 14px;
+  color: var(--text-dark);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.route-details p:first-child {
+  font-weight: 600;
+  color: var(--dark-green);
+  font-size: 16px;
+}
+
+/* Save Route Button */
+.save-route-btn {
+  width: 100%;
+  padding: 12px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.2s ease;
+  margin-top: 15px;
+}
+
+.save-route-btn:hover {
+  background: #059669;
+}
