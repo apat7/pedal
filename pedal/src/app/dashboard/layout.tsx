@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, createContext, useContext } from 'react';
+import { useState, createContext, useContext, useEffect } from 'react';
 import UnifiedMap from '../components/UnifiedMap';
 import { Map } from 'lucide-react';
 import './dashboard.css'; // Assuming dashboard.css is relevant for the layout as well
@@ -40,6 +40,21 @@ export default function DashboardLayout({
   const apiKey1 = process.env.NEXT_PUBLIC_MAPTILER_API_KEY_1;
   const apiKey2 = process.env.NEXT_PUBLIC_MAPTILER_API_KEY_2;
   const [currentRoute, setCurrentRoute] = useState<RouteData | null>(null);
+
+  // Cleanup function to ensure proper state cleanup when leaving dashboard
+  useEffect(() => {
+    // Add dashboard class to body for styling
+    document.body.classList.add('dashboard-layout');
+    
+    return () => {
+      // Remove dashboard classes and clean up
+      document.body.classList.remove('dashboard-layout');
+      document.body.className = document.body.className
+        .replace(/dashboard-[\w-]*/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+    };
+  }, []);
 
   return (
     <DashboardContext.Provider value={{ currentRoute, setCurrentRoute }}>

@@ -4,6 +4,19 @@ import AnimatedMap from './components/AnimatedMap';
 
 export default function Home() {
   useEffect(() => {
+    // Set cache control headers to prevent caching issues after logout
+    if (typeof window !== 'undefined') {
+      // Clear any stale state or cached content
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      
+      // Remove any dashboard-related classes or styles that might persist
+      document.body.className = document.body.className
+        .replace(/dashboard-[\w-]*/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+    
     // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', (e) => {

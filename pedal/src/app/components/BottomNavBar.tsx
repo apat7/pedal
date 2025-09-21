@@ -17,7 +17,23 @@ const BottomNavBar: React.FC<BottomNavBarProps> = ({ onMapClick }) => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      router.push('/'); // Redirect to home landing page
+      
+      // Clear any cached data and force a clean state
+      // Clear localStorage and sessionStorage
+      localStorage.clear();
+      sessionStorage.clear();
+      
+      // Clear any service worker caches if they exist
+      if ('caches' in window) {
+        caches.keys().then(function(names) {
+          for (let name of names) {
+            caches.delete(name);
+          }
+        });
+      }
+      
+      // Force a hard reload to the home page to ensure clean state
+      window.location.href = '/';
     } catch (error) {
       console.error('Error logging out:', error);
       alert('Failed to log out. Please try again.');
