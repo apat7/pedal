@@ -392,13 +392,13 @@ const UnifiedMap: React.FC<UnifiedMapProps> = ({
 
       // Create route GeoJSON
       const routeGeoJSON = {
-        type: 'Feature',
+        type: 'Feature' as const,
         properties: {
           name: 'Route',
           description: 'Generated route from backend'
         },
         geometry: {
-          type: 'LineString',
+          type: 'LineString' as const,
           coordinates: routeCoordinates
         },
       };
@@ -409,43 +409,43 @@ const UnifiedMap: React.FC<UnifiedMapProps> = ({
         data: routeGeoJSON,
       });
 
-      // Add route outline layer (white background)
-      map.current.addLayer({
-        id: 'route-outline',
-        type: 'line',
-        source: 'route',
-        layout: {
-          'line-join': 'round',
-          'line-cap': 'round',
-        },
-        paint: {
-          'line-color': '#ffffff',
-          'line-width': 10,
-          'line-opacity': 0.9,
-        },
+      // Add start marker
+      map.current.addSource('start-marker', {
+        type: 'geojson',
+        data: {
+          type: 'Feature' as const,
+          properties: {
+            type: 'start',
+            name: startLocation?.name || 'Start'
+          },
+          geometry: {
+            type: 'Point' as const,
+            coordinates: actualStartCoords
+          }
+        }
       });
 
-      // Add main route layer
-      map.current.addLayer({
-        id: 'route',
-        type: 'line',
-        source: 'route',
-        layout: {
-          'line-join': 'round',
-          'line-cap': 'round',
-        },
-        paint: {
-          'line-color': '#1d4ed8',
-          'line-width': 6,
-          'line-opacity': 1,
-        },
+      // Add end marker
+      map.current.addSource('end-marker', {
+        type: 'geojson',
+        data: {
+          type: 'Feature' as const,
+          properties: {
+            type: 'end',
+            name: endLocation?.name || 'End'
+          },
+          geometry: {
+            type: 'Point' as const,
+            coordinates: actualEndCoords
+          }
+        }
       });
 
       console.log('✅ Route line layers added');
 
       // Determine start and end coordinates
-      let actualStartCoords: [number, number];
-      let actualEndCoords: [number, number];
+      let actualStartCoords: [number, number] = [0, 0]; // Initialize with a default value
+      let actualEndCoords: [number, number] = [0, 0]; // Initialize with a default value
 
       // Use provided locations if available, otherwise use route endpoints
       if (startLocation?.coordinates &&
